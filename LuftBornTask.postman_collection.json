@@ -1,0 +1,115 @@
+{
+  "info": {
+    "_postman_id": "3cd88369-0f33-4413-b872-1cc129f220e9",
+    "name": "LuftBornTask",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40371887"
+  },
+  "item": [
+    {
+      "name": "Get Pages Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse the JSON response\r",
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "\r",
+              "//1. Validate on the Status Code \r",
+              "pm.test(\"Status Code Validation\",function(){\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "// 2. Validate that the page number is 2\r",
+              "pm.test(\"Page number is 2\", function () {\r",
+              "    pm.expect(jsonData.page).to.eql(2);\r",
+              "});\r",
+              "\r",
+              "// 3. Validate that each element in the data array contains id, email, first_name, last_name, and avatar\r",
+              "pm.test(\"Each user object has all required fields\", function () {\r",
+              "    pm.expect(jsonData.data).to.be.an('array').that.is.not.empty;\r",
+              "\r",
+              "    jsonData.data.forEach((user, index) => {\r",
+              "        pm.expect(user, `User at index ${index}`).to.have.all.keys(\r",
+              "            'id', \r",
+              "            'email', \r",
+              "            'first_name', \r",
+              "            'last_name', \r",
+              "            'avatar'\r",
+              "        );\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/api/users?page=2",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post Page Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BaseUrl",
+      "value": ""
+    }
+  ]
+}
